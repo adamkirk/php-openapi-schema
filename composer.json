@@ -1,0 +1,43 @@
+{
+    "name": "adamkirk/php-openapi-schema",
+    "description": "DTO classes to represent OpenApi Schema 3.1.X",
+    "keywords": [
+        "openapi",
+        "swagger"
+    ],
+    "homepage": "https://github.com/adamkirk/php-openapi-schema",
+    "type": "library",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "scripts": {
+        "test": "./vendor/bin/phpunit",
+        "csfix": "PHP_CS_FIXER_IGNORE_ENV=true ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php src tests",
+        "stan": "./vendor/bin/phpstan analyse -c phpstan.neon src tests",
+        "csfix-dry-run": "PHP_CS_FIXER_IGNORE_ENV=true ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run src tests",
+        "lint": [
+            "@csfix-dry-run",
+            "@stan"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenApiSchema\\": "src/",
+            "Tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Adam Kirk",
+            "email": "adam_kirk@live.co.uk",
+            "homepage": "https://github.com/adamkirk",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=8.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "~9.6"
+    }
+}
