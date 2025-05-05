@@ -2,6 +2,10 @@
 PHP OpenAPI Schema library
 
 
+## Docs
+
+Docs sited hosted on [github pages](https://adamkirk.github.io/php-openapi-schema/)
+
 ## Supported versions
 
 >= 8.0
