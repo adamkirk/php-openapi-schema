@@ -1,0 +1,142 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+        "title": "My API",
+        "description": "An API that does things",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/users": {
+            "get": {
+                "summary": "list users",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "page_size",
+                        "in": "query",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "One of the query parameters was invalid"
+                    },
+                    "200": {
+                        "description": "A list of users",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer"
+                                            },
+                                            "name": {
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/users/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "schema": {
+                        "type": "integer"
+                    }
+                }
+            ],
+            "get": {
+                "description": "Get a user",
+                "responses": {
+                    "200": {
+                        "description": "The user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Get a user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "The user.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/user"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a user",
+                "responses": {
+                    "204": {
+                        "description": "user successfully deleted (no content)"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "user": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "exclusiveMinimum": 0
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}
