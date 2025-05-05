@@ -6,4 +6,4 @@ PHP OpenAPI Schema library
 
 ## Docs
 
-Docs sited hosted on [github pages](https://adamkirk.github.io/php-openapi-schema/){target=blank}
+Docs sited hosted on [github pages](https://adamkirk.github.io/php-openapi-schema/)
