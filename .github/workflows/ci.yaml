@@ -1,0 +1,45 @@
+name: CI checks
+run-name: "CI checks - #${{ github.event.number }} (${{ github.sha }})"
+on: 
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    # Run at 1am every monday 
+    - cron: "0 1 * * 1"
+
+env:
+  IMG_NAME: adamkirk/php-openapi-schema:testing
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  run_tests:
+    name: "Run CI checks"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - "8.0"
+          - "8.1"
+          - "8.2"
+          - "8.3"
+          - "8.4"
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Build runtime image"
+        run: IMG_BASE_VERSION=${{ matrix.version }} make build
+      - name: "Install composer dependencies"
+        run: |
+          docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer install
+          docker run -v "$(pwd)/tools/php-cs-fixer:/app" -w /app ${{ env.IMG_NAME }} composer install
+      - name: "Run cs fixer"
+        run: docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer csfix-dry-run
+      - name: "Run phpstan"
+        run: docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer stan
+      - name: "Run tests"
+        run: docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer test
