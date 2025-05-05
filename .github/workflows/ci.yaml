@@ -1,5 +1,5 @@
 name: CI checks
-run-name: "CI checks - #${{ github.event.number || github.ref }} (${{ github.sha }})"
+run-name: "CI checks - ${{ github.event.number || github.ref_name }} (${{ github.sha }})"
 on: 
   pull_request:
   push:
@@ -13,7 +13,7 @@ env:
   IMG_NAME: adamkirk/php-openapi-schema:testing
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event.number || github.ref_name }}
   cancel-in-progress: true
 
 jobs:
