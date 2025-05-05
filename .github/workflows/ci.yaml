@@ -17,7 +17,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  run_tests:
+  run_checks:
     name: "Run CI checks"
     runs-on: ubuntu-latest
     strategy:
@@ -43,3 +43,20 @@ jobs:
         run: docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer stan
       - name: "Run tests"
         run: docker run -v "$(pwd):/app" -w /app ${{ env.IMG_NAME }} composer test
+
+  # Here so we can hav a reliable status check for branch rulesets
+  # Simply pointing the ruleset at the matrix, it gets stuck in waiting for status to be reported.
+  status:
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    name: report_status
+    needs:
+      - run_checks
+    steps:
+      - run: |
+          result="${{ needs.run_checks.result }}"
+          if [[ $result == "success" || $result == "skipped" ]]; then
+            exit 0
+          else
+            exit 1
+          fi
