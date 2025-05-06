@@ -33,12 +33,20 @@ class RequestBody implements Marshallable
 		return $this;
 	}
 
+	public function setRequired(bool $required): self
+	{
+		$this->required = $required;
+		return $this;
+	}
+
+	/** @deprecated use setRequired */
 	public function isRequired(): self
 	{
 		$this->required = true;
 		return $this;
 	}
 
+	/** @deprecated use setRequired */
 	public function isNotRequired(): self
 	{
 		$this->required = false;
