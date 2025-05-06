@@ -87,7 +87,7 @@ class Schema implements Marshallable
 		return $this;
 	}
 
-	public function setDescription(string $description): self
+	public function setDescription(?string $description): self
 	{
 		$this->description = $description;
 		return $this;

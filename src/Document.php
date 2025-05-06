@@ -59,6 +59,11 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function getInfo(): Info
+	{
+		return $this->info;
+	}
+
 	public function setJsonSchemaDialect(?string $jsonSchemaDialect): self
 	{
 		$this->jsonSchemaDialect = $jsonSchemaDialect;

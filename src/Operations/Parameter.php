@@ -48,24 +48,40 @@ class Parameter implements Marshallable
 		return $this;
 	}
 
+	public function setRequired(bool $required): self
+	{
+		$this->required = $required;
+		return $this;
+	}
+
+	/** @deprecated use setRequired */
 	public function isRequired(): self
 	{
 		$this->required = true;
 		return $this;
 	}
 
+	/** @deprecated use setRequired */
 	public function isNotRequired(): self
 	{
 		$this->required = false;
 		return $this;
 	}
 
+	public function setAllowsEmptyValue(bool $allowed): self
+	{
+		$this->allowEmptyValue = $allowed;
+		return $this;
+	}
+
+	/** @deprecated use setAllowsEmptyValue */
 	public function allowsEmptyValue(): self
 	{
 		$this->allowEmptyValue = true;
 		return $this;
 	}
 
+	/** @deprecated use setAllowsEmptyValue */
 	public function doesNotAllowEmptyValue(): self
 	{
 		$this->allowEmptyValue = false;

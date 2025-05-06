@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace OpenApiSchema\Spec;
 
+use Iterator;
 use stdClass;
+use ArrayIterator;
+use IteratorAggregate;
 use InvalidArgumentException;
 
 /**
  * @template T
+ *
+ * @implements IteratorAggregate<int, T>
  */
-abstract class Collection implements Marshallable
+abstract class Collection implements Marshallable, IteratorAggregate
 {
 	/** @var array<int, T> $items */
 	protected array $items;
@@ -45,6 +50,11 @@ abstract class Collection implements Marshallable
 			fn($item) => $item instanceof Marshallable ? $item->toMarshallable($ctx) : $item,
 			$this->items,
 		);
+	}
+
+	public function getIterator(): Iterator
+	{
+		return new ArrayIterator($this->items);
 	}
 
 	abstract protected static function isType(mixed $value): bool;
