@@ -41,7 +41,6 @@ class Components implements Marshallable
 
 	public function __construct()
 	{
-
 		$this->parameters = new Parameters();
 		$this->responses = new Responses();
 		$this->schemas = new Schemas();

@@ -26,16 +26,17 @@ class Document implements Marshallable
 	use ConvertsSelfToMarshallable;
 	use HasCustomAttributes;
 
-	protected ?string $openapi;
-	protected Info $info;
-	protected ?string $jsonSchemaDialect;
+	protected ?string $openapi = null;
+	protected ?Info $info = null;
+	protected ?string $jsonSchemaDialect = null;
+	protected ?ExternalDocumentation $externalDocs = null;
+
 	protected Servers $servers;
 	protected PathItems $paths;
 	protected Components $components;
 	protected PathItems $webhooks;
 	protected SecurityRequirements $security;
 	protected Tags $tags;
-	protected ?ExternalDocumentation $externalDocs;
 
 	public function __construct()
 	{
@@ -53,13 +54,18 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function getOpenapi(): ?string
+	{
+		return $this->openapi;
+	}
+
 	public function setInfo(Info $info): self
 	{
 		$this->info = $info;
 		return $this;
 	}
 
-	public function getInfo(): Info
+	public function getInfo(): ?Info
 	{
 		return $this->info;
 	}
@@ -70,10 +76,26 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function getJsonSchemaDialect(): ?string
+	{
+		return $this->jsonSchemaDialect;
+	}
+
 	public function addServers(Server ...$servers): self
 	{
 		$this->servers->add(...$servers);
 		return $this;
+	}
+
+	public function setServers(Servers $servers): self
+	{
+		$this->servers = $servers;
+		return $this;
+	}
+
+	public function getServers(): Servers
+	{
+		return $this->servers;
 	}
 
 	public function addPathItem(string $path, PathItem $item): self
@@ -82,10 +104,26 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function setPathItems(PathItems $pathItems): self
+	{
+		$this->paths = $pathItems;
+		return $this;
+	}
+
+	public function getPathItems(): PathItems
+	{
+		return $this->paths;
+	}
+
 	public function setComponents(Components $components): self
 	{
 		$this->components = $components;
 		return $this;
+	}
+
+	public function getComponents(): Components
+	{
+		return $this->components;
 	}
 
 	public function addWebhook(string $key, PathItem $pathItem): self
@@ -94,10 +132,32 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function setWebhooks(PathItems $webhooks): self
+	{
+		$this->webhooks = $webhooks;
+		return $this;
+	}
+
+	public function getWebhooks(): PathItems
+	{
+		return $this->webhooks;
+	}
+
 	public function addSecurityRequirement(string $key, SecurityRequirement $requirement): self
 	{
 		$this->security->add($key, $requirement);
 		return $this;
+	}
+
+	public function setSecurityRequirements(SecurityRequirements $securityRequirements): self
+	{
+		$this->security = $securityRequirements;
+		return $this;
+	}
+
+	public function getSecurityRequirements(): SecurityRequirements
+	{
+		return $this->security;
 	}
 
 	public function addTags(Tag ...$tags): self
@@ -106,10 +166,26 @@ class Document implements Marshallable
 		return $this;
 	}
 
+	public function setTags(Tags $tags): self
+	{
+		$this->tags = $tags;
+		return $this;
+	}
+
+	public function getTags(): Tags
+	{
+		return $this->tags;
+	}
+
 	public function setExternalDocs(?ExternalDocumentation $externalDocs): self
 	{
 		$this->externalDocs = $externalDocs;
 		return $this;
+	}
+
+	public function getExternalDocs(): ?ExternalDocumentation
+	{
+		return $this->externalDocs;
 	}
 
 	public function toJson(MarshallingContext $ctx): string

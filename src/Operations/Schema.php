@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace OpenApiSchema\Operations;
 
-use OpenApiSchema\Spec\HasCustomAttributes;
 use OpenApiSchema\Spec\Marshallable;
+use OpenApiSchema\Spec\HasCustomAttributes;
 use OpenApiSchema\Spec\ConvertsSelfToMarshallable;
 
 class Schema implements Marshallable
@@ -15,7 +15,7 @@ class Schema implements Marshallable
 
 	protected ?string $ref;
 
-	protected ?string $description;
+	protected ?string $description = null;
 
 	/** @var string[] $required */
 	protected array $required;
@@ -31,9 +31,15 @@ class Schema implements Marshallable
 	/** @var string[] $enum */
 	protected array $enum;
 
+	protected ?bool $nullable;
+
 	protected ?Schema $items;
 
 	protected Schemas $properties;
+
+	protected PolymorphicSchemas $oneOf;
+	protected PolymorphicSchemas $anyOf;
+	protected PolymorphicSchemas $allOf;
 
 	// Not sure if there is a strict schema for this, can be all sorts...
 	protected mixed $examples;
@@ -43,6 +49,9 @@ class Schema implements Marshallable
 		$this->required = [];
 		$this->enum = [];
 		$this->properties = new Schemas();
+		$this->oneOf = new PolymorphicSchemas();
+		$this->anyOf = new PolymorphicSchemas();
+		$this->allOf = new PolymorphicSchemas();
 	}
 
 	public function setRef(string $ref): self
@@ -60,6 +69,27 @@ class Schema implements Marshallable
 	public function setFormat(string $format): self
 	{
 		$this->format = $format;
+		return $this;
+	}
+
+	public function addOneOfSchemas(Schema ...$schemas): self
+	{
+		$this->oneOf->add(...$schemas);
+
+		return $this;
+	}
+
+	public function addAnyOfSchemas(Schema ...$schemas): self
+	{
+		$this->anyOf->add(...$schemas);
+
+		return $this;
+	}
+
+	public function addAllOfSchemas(Schema ...$schemas): self
+	{
+		$this->allOf->add(...$schemas);
+
 		return $this;
 	}
 
@@ -90,6 +120,12 @@ class Schema implements Marshallable
 	public function setDescription(?string $description): self
 	{
 		$this->description = $description;
+		return $this;
+	}
+
+	public function setNullable(bool $nullable): self
+	{
+		$this->nullable = $nullable;
 		return $this;
 	}
 
