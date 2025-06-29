@@ -4,13 +4,18 @@ declare(strict_types=1);
 
 namespace OpenApiSchema\Spec;
 
+use Iterator;
 use stdClass;
+use ArrayIterator;
+use IteratorAggregate;
 use InvalidArgumentException;
 
 /**
  * @template T
+ *
+ * @implements IteratorAggregate<string, T>
  */
-abstract class Dictionary implements Marshallable
+abstract class Dictionary implements Marshallable, IteratorAggregate
 {
 	/**
 	 * @var array<string, T> $items
@@ -63,6 +68,11 @@ abstract class Dictionary implements Marshallable
 			fn($item) => $item instanceof Marshallable ? $item->toMarshallable($ctx) : $item,
 			$this->items,
 		);
+	}
+
+	public function getIterator(): Iterator
+	{
+		return new ArrayIterator($this->items);
 	}
 
 	abstract protected static function isType(mixed $value): bool;

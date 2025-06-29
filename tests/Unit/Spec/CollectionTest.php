@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use OpenApiSchema\Spec\Collection;
 use OpenApiSchema\Spec\MarshallingContext;
 use Tests\Unit\Spec\Stubs\StringCollection;
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\Attributes\DataProvider;
 
 /**
@@ -51,6 +52,7 @@ class CollectionTest extends TestCase
 
 	public function test_to_marshallable(): void
 	{
+		/** @var MarshallingContext|MockObject */
 		$ctx = $this->createMock(MarshallingContext::class);
 		$coll = new StringCollection();
 		$coll->add("some");
@@ -60,5 +62,23 @@ class CollectionTest extends TestCase
 			["some", "strings"],
 			$coll->toMarshallable($ctx),
 		);
+	}
+
+	public function test_can_iterate(): void
+	{
+		$coll = new StringCollection();
+		$coll->add("some", "strings");
+		$coll->add("other");
+
+		$values = [];
+		foreach ($coll as $key => $value) {
+			$values[$key] = $value;
+		}
+
+		$this->assertEquals([
+			0 => 'some',
+			1 => 'strings',
+			2 => 'other',
+		], $values);
 	}
 }

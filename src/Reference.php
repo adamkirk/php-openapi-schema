@@ -11,14 +11,19 @@ class Reference implements Marshallable
 {
 	use ConvertsSelfToMarshallable;
 
-	protected ?string $ref;
-	protected ?string $summary;
-	protected ?string $description;
+	protected ?string $ref = null;
+	protected ?string $summary = null;
+	protected ?string $description = null;
 
-	public function setSummary(string $summary): self
+	public function setSummary(?string $summary): self
 	{
 		$this->summary = $summary;
 		return $this;
+	}
+
+	public function getSummary(): ?string
+	{
+		return $this->summary;
 	}
 
 	public function setDescription(?string $description): self
@@ -27,9 +32,19 @@ class Reference implements Marshallable
 		return $this;
 	}
 
+	public function getDescription(): ?string
+	{
+		return $this->description;
+	}
+
 	public function setRef(?string $ref): self
 	{
 		$this->ref = $ref;
 		return $this;
+	}
+
+	public function getRef(): ?string
+	{
+		return $this->ref;
 	}
 }

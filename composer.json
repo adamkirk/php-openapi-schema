@@ -12,7 +12,7 @@
     "scripts": {
         "test": "./vendor/bin/phpunit",
         "csfix": "PHP_CS_FIXER_IGNORE_ENV=true ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php src tests",
-        "stan": "./vendor/bin/phpstan analyse -c phpstan.neon src tests",
+        "stan": "./vendor/bin/phpstan analyse -c phpstan.neon",
         "csfix-dry-run": "PHP_CS_FIXER_IGNORE_ENV=true ./tools/php-cs-fixer/vendor/bin/php-cs-fixer fix --config .php-cs-fixer.php --dry-run src tests",
         "lint": [
             "@csfix-dry-run",

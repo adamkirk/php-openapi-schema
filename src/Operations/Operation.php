@@ -25,7 +25,7 @@ class Operation implements Marshallable
 	protected ?ExternalDocumentation $externalDocs;
 	protected ?string $operationId;
 	protected Parameters $parameters;
-	protected RequestBody $requestBody;
+	protected ?RequestBody $requestBody;
 	protected Security $security;
 	protected Responses $responses;
 	protected Servers $servers;
@@ -80,7 +80,7 @@ class Operation implements Marshallable
 		return $this;
 	}
 
-	public function setRequestBody(RequestBody $requestBody): self
+	public function setRequestBody(?RequestBody $requestBody): self
 	{
 		$this->requestBody = $requestBody;
 		return $this;

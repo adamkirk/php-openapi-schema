@@ -14,7 +14,7 @@ class Response implements Marshallable
 	use ConvertsSelfToMarshallable;
 	use HasCustomAttributes;
 
-	protected string $description;
+	protected string $description = '';
 	protected Headers $headers;
 	protected Content $content;
 
