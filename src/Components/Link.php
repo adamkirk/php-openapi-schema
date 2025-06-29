@@ -15,17 +15,27 @@ class Link implements Marshallable
 	use ConvertsSelfToMarshallable;
 	use HasCustomAttributes;
 
-	protected ?string $description;
-	protected ?string $operationRef;
-	protected ?string $operationId;
-	protected mixed $requestBody;
-	protected Server $body;
+	protected ?string $description = null;
+	protected ?string $operationRef = null;
+	protected ?string $operationId = null;
+	protected mixed $requestBody = null;
+	protected ?Server $server = null;
 	protected StringDictionary $parameters;
+
+	public function __construct()
+	{
+		$this->parameters = new StringDictionary();
+	}
 
 	public function setDescription(?string $description): self
 	{
 		$this->description = $description;
 		return $this;
+	}
+
+	public function getDescription(): ?string
+	{
+		return $this->description;
 	}
 
 	public function setOperationRef(?string $operationRef): self
@@ -34,10 +44,20 @@ class Link implements Marshallable
 		return $this;
 	}
 
+	public function getOperationRef(): ?string
+	{
+		return $this->operationRef;
+	}
+
 	public function setOperationId(?string $operationId): self
 	{
 		$this->operationId = $operationId;
 		return $this;
+	}
+
+	public function getOperationId(): ?string
+	{
+		return $this->operationId;
 	}
 
 	public function setRequestBody(mixed $requestBody): self
@@ -46,9 +66,25 @@ class Link implements Marshallable
 		return $this;
 	}
 
+	public function getRequestBody(): mixed
+	{
+		return $this->requestBody;
+	}
+
 	public function setServer(Server $server): self
 	{
-		$this->body = $server;
+		$this->server = $server;
+		return $this;
+	}
+
+	public function getServer(): ?Server
+	{
+		return $this->server;
+	}
+
+	public function setParameters(StringDictionary $parameters): self
+	{
+		$this->parameters = $parameters;
 		return $this;
 	}
 
@@ -58,4 +94,8 @@ class Link implements Marshallable
 		return $this;
 	}
 
+	public function getParameters(): StringDictionary
+	{
+		return $this->parameters;
+	}
 }
